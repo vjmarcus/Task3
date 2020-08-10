@@ -32,6 +32,9 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.StoryViewHol
     @Override
     public void onBindViewHolder(@NonNull StoryViewHolder holder, int position) {
         Story story = storyList.get(position);
+        holder.titleTextView.setText(story.getTitle());
+        holder.authorTextView.setText(story.getAuthor());
+        holder.publishedAtTextView.setText(story.getPublishedAt());
 
     }
 
