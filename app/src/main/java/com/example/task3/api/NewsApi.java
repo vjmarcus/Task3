@@ -24,5 +24,6 @@ public interface NewsApi {
                                      @Query("from") String fromDate,
                                      @Query("to") String toDate,
                                      @Query("pageSize") int pageSize,
+                                     @Query("language") String language,
                                      @Query("apiKey") String apiKey);
 }

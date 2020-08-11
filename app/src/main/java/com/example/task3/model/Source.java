@@ -3,7 +3,9 @@ package com.example.task3.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Source {
+import java.io.Serializable;
+
+public class Source implements Serializable {
     @SerializedName("name")
     @Expose
     private String name;

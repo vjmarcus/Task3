@@ -3,6 +3,7 @@ package com.example.task3;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -52,7 +53,7 @@ public class MainActivity extends AppCompatActivity{
         ApiFactory apiFactory = ApiFactory.getInstance();
         NewsApi newsApi = ApiFactory.getNewsApi();
         Call<StoryList> call = newsApi.getPostsByDate("software", ApiFactory.getCurrentDate(),
-                ApiFactory.getCurrentDate(), 20, ApiFactory.API_KEY);
+                ApiFactory.getCurrentDate(), 20, "en", ApiFactory.API_KEY);
         call.enqueue(new Callback<StoryList>() {
             @Override
             public void onResponse(Call<StoryList> call, Response<StoryList> response) {
@@ -90,8 +91,15 @@ public class MainActivity extends AppCompatActivity{
             @Override
             public void recyclerViewListClicked(View v, int position) {
                 Toast.makeText(MainActivity.this, "CLICK " + position, Toast.LENGTH_SHORT).show();
+                startIntentToSecondActivity(position);
             }
         };
+    }
+
+    private void startIntentToSecondActivity(int position) {
+        Intent intent = new Intent(this, SecondActivity.class);
+        intent.putExtra("obj", storyList.get(position));
+        startActivity(intent);
     }
 
     private void addTestStories() {
