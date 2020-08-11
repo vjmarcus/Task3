@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,17 +28,11 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     private static final String TAG = "MyApp";
 
-    private TextView authorTextView;
-    private TextView titleTextView;
-    private TextView publishedAdTextView;
     private Spinner spinner;
-    private RecyclerView recyclerView;
     private List<Story> storyList;
-    private StoryAdapter storyAdapter;
-    private Retrofit retrofit;
     private RecyclerViewClickListener recyclerViewClickListener;
 
     @Override
@@ -44,15 +40,14 @@ public class MainActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Log.d(TAG, "onCreate");
-        init();
-        getCallToNewsApi();
         setTitle("Software");
+        initSpinner();
     }
 
-    private void getCallToNewsApi() {
+    private void getCallToNewsApi(String key) {
         ApiFactory apiFactory = ApiFactory.getInstance();
         NewsApi newsApi = ApiFactory.getNewsApi();
-        Call<StoryList> call = newsApi.getPostsByDate("software", ApiFactory.getCurrentDate(),
+        Call<StoryList> call = newsApi.getPostsByDate(key, ApiFactory.getCurrentDate(),
                 ApiFactory.getCurrentDate(), 20, "en", ApiFactory.API_KEY);
         call.enqueue(new Callback<StoryList>() {
             @Override
@@ -73,16 +68,9 @@ public class MainActivity extends AppCompatActivity{
         });
     }
 
-
-    private void init() {
-        authorTextView = findViewById(R.id.authorTextView);
-        titleTextView = findViewById(R.id.titleTextView);
-        publishedAdTextView = findViewById(R.id.publishedAtTextView);
-    }
-
     private void initRecycler() {
-        recyclerView = findViewById(R.id.story_recycler);
-        storyAdapter = new StoryAdapter(storyList, recyclerViewClickListener);
+        RecyclerView recyclerView = findViewById(R.id.story_recycler);
+        StoryAdapter storyAdapter = new StoryAdapter(storyList, recyclerViewClickListener);
         recyclerView.setAdapter(storyAdapter);
     }
 
@@ -108,5 +96,43 @@ public class MainActivity extends AppCompatActivity{
             storyList.add(new Story(new Source("sourceName"), "author" + i, "title" + i,
                     "description" + i, "urlToImage" + i, "publishedAt" + i));
         }
+    }
+
+    private void initSpinner() {
+        spinner = findViewById(R.id.spinner);
+        ArrayAdapter arrayAdapter = ArrayAdapter.createFromResource(this, R.array.topics,
+                android.R.layout.simple_list_item_1);
+        spinner.setAdapter(arrayAdapter);
+        spinner.setOnItemSelectedListener(this);
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        switch (adapterView.getSelectedItem().toString()) {
+            case "bitcoin":
+                getCallToNewsApi("bitcoin");
+                setTitle("Bitcoin");
+                break;
+            case "android":
+                getCallToNewsApi("android");
+                setTitle("Android");
+                break;
+            case "science":
+                getCallToNewsApi("science");
+                setTitle("Science");
+                break;
+            case "technology":
+                getCallToNewsApi("technology");
+                setTitle("Technology");
+                break;
+            default:
+                getCallToNewsApi("software");
+                setTitle("Software");
+        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+        //DO NOTHING
     }
 }

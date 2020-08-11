@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Task3</string>
+    <string-array name="topics">
+        <item>software</item>
+        <item>bitcoin</item>
+        <item>android</item>
+        <item>science</item>
+        <item>technology</item>
+    </string-array>
 </resources>
