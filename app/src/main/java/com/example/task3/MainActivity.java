@@ -29,20 +29,30 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
     private static final String TAG = "MyApp";
 
     private Spinner spinner;
     private List<Story> storyList;
     private RecyclerViewClickListener recyclerViewClickListener;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private ResponseListener responseListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Log.d(TAG, "onCreate");
-        setTitle("Software");
+        responseListener = new ResponseListener() {
+            @Override
+            public void responseReceived(Boolean isFinished) {
+                if (isFinished) {
+                    Toast.makeText(MainActivity.this, "LOAD OK!", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(MainActivity.this, "LOAD FAILURE", Toast.LENGTH_SHORT).show();
+                }
+            }
+        };
         initSpinner();
         swipeRefreshLayout = findViewById(R.id.swipe_container);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -69,11 +79,13 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 initRecyclerViewClickListener();
                 initRecycler();
                 Log.d(TAG, "onResponse: " + storyList.size());
+                responseListener.responseReceived(true);
             }
 
             @Override
             public void onFailure(Call<StoryList> call, Throwable t) {
                 Toast.makeText(MainActivity.this, "ERROR = " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                responseListener.responseReceived(false);
             }
         });
     }
@@ -137,4 +149,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     public void onNothingSelected(AdapterView<?> adapterView) {
         //DO NOTHING
     }
+
+
 }
