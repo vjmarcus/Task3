@@ -28,10 +28,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+import retrofit2.internal.EverythingIsNonNull;
 
-public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
+public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+
     private static final String TAG = "MyApp";
-
     private Spinner spinner;
     private List<Story> storyList;
     private RecyclerViewClickListener recyclerViewClickListener;
@@ -43,6 +44,24 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Log.d(TAG, "onCreate");
+        initResponseListener();
+        initSpinner();
+        initSwipeRefreshLayout();
+    }
+
+    private void initSwipeRefreshLayout(){
+        swipeRefreshLayout = findViewById(R.id.swipe_container);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getCallToNewsApi(spinner.getSelectedItem().toString());
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+
+    }
+
+    private void initResponseListener() {
         responseListener = new ResponseListener() {
             @Override
             public void responseReceived(Boolean isFinished) {
@@ -53,15 +72,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 }
             }
         };
-        initSpinner();
-        swipeRefreshLayout = findViewById(R.id.swipe_container);
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                getCallToNewsApi(spinner.getSelectedItem().toString());
-                swipeRefreshLayout.setRefreshing(false);
-            }
-        });
     }
 
     private void getCallToNewsApi(String key) {
@@ -70,6 +80,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         Call<StoryList> call = newsApi.getPostsByDate(key, ApiFactory.getCurrentDate(),
                 ApiFactory.getCurrentDate(), 20, "en", ApiFactory.API_KEY);
         call.enqueue(new Callback<StoryList>() {
+            @EverythingIsNonNull
             @Override
             public void onResponse(Call<StoryList> call, Response<StoryList> response) {
                 Log.d(TAG, "onResponse: " + response);
@@ -81,7 +92,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 Log.d(TAG, "onResponse: " + storyList.size());
                 responseListener.responseReceived(true);
             }
-
+            @EverythingIsNonNull
             @Override
             public void onFailure(Call<StoryList> call, Throwable t) {
                 Toast.makeText(MainActivity.this, "ERROR = " + t.getMessage(), Toast.LENGTH_SHORT).show();
@@ -114,7 +125,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     private void initSpinner() {
         spinner = findViewById(R.id.spinner);
-        ArrayAdapter arrayAdapter = ArrayAdapter.createFromResource(this, R.array.topics,
+        ArrayAdapter<?> arrayAdapter = ArrayAdapter.createFromResource(this, R.array.topics,
                 android.R.layout.simple_list_item_1);
         spinner.setAdapter(arrayAdapter);
         spinner.setOnItemSelectedListener(this);
@@ -149,6 +160,4 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     public void onNothingSelected(AdapterView<?> adapterView) {
         //DO NOTHING
     }
-
-
 }

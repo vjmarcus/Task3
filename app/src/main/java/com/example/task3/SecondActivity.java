@@ -16,9 +16,9 @@ public class SecondActivity extends AppCompatActivity {
     private TextView titleSecondTextView;
     private TextView sourceNameTextView;
     private TextView descriptionTextView;
-    private Story story;
     private ImageView glideImageView;
     private ImageView picassoImageView;
+    private Story story;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,11 +28,10 @@ public class SecondActivity extends AppCompatActivity {
         getIntentFromMainActivity();
         setTextToTextView();
         initImageViews();
-        setImageViews();
-
+        loadImageToImageViews();
     }
 
-    private void setImageViews() {
+    private void loadImageToImageViews() {
         Glide.with(this)
                 .load(story.getUrlToImage())
                 .into(glideImageView);

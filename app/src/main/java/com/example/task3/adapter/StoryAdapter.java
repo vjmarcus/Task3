@@ -26,16 +26,6 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.StoryViewHol
         this.recyclerViewClickListener = recyclerViewClickListener;
     }
 
-    public void clear() {
-        storyList.clear();
-        notifyDataSetChanged();
-    }
-
-    public void addAll(List<Story> list) {
-        storyList.addAll(list);
-        notifyDataSetChanged();
-    }
-
     @NonNull
     @Override
     public StoryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -50,7 +40,6 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.StoryViewHol
         holder.titleTextView.setText(story.getTitle());
         holder.authorTextView.setText(story.getAuthor());
         holder.publishedAtTextView.setText(story.getPublishedAt());
-
     }
 
     @Override
