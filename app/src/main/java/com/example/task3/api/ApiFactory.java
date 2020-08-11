@@ -7,13 +7,8 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiFactory {
-    //https://newsapi.org/v2/top-headlines?sources=techcrunch&apiKey=92632cb5e9be43ef9dfc1545d021180a
-    public static final String NEWS_API_KEY = "92632cb5e9be43ef9dfc1545d021180a";
-    public static final String TOPIC = "q=software";
-    public static final String PAGE_SIZE = "pageSize=20";
-    public static  String dateFrom = "&from=";
-    public static final String URL = "https://newsapi.org/v2/everything?" + TOPIC + dateFrom + PAGE_SIZE +
-            "&apiKey=" + NEWS_API_KEY;
+    //https://newsapi.org/v2/everything?q=software&from=2020-08-11&to=2020-08-11&apiKey=92632cb5e9be43ef9dfc1545d021180a
+    public static final String API_KEY = "92632cb5e9be43ef9dfc1545d021180a";
     public static final String BASE_URL = "https://newsapi.org/v2/";
     private static final String TAG = "MyApp";
 

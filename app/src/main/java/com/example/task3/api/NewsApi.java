@@ -12,10 +12,17 @@ import retrofit2.http.Query;
 
 public interface NewsApi {
     @GET("everything?q=software&apiKey=92632cb5e9be43ef9dfc1545d021180a")
+
     Call <StoryList>  getPosts();
 
-    @GET("everything?q=software&apiKey=92632cb5e9be43ef9dfc1545d021180a")
-    Call <StoryList>  getPostsByDate(@Query("from=") String date);
+//    @GET("everything")
+//    Call <StoryList>  getPostsByDate(@Query("q") String topic,
+//                                     @Query("apiKey") String ApiKey);
 
-
+    @GET("everything")
+    Call <StoryList>  getPostsByDate(@Query("q") String key,
+                                     @Query("from") String fromDate,
+                                     @Query("to") String toDate,
+                                     @Query("pageSize") int pageSize,
+                                     @Query("apiKey") String apiKey);
 }

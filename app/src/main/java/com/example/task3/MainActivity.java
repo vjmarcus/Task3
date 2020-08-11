@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.task3.adapter.StoryAdapter;
 import com.example.task3.api.ApiFactory;
@@ -22,7 +23,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MyApp";
@@ -41,43 +41,30 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Log.d(TAG, "onCreate");
-
         init();
+        getCallToNewsApi();
+        setTitle("Software");
+    }
 
+    private void getCallToNewsApi() {
         ApiFactory apiFactory = ApiFactory.getInstance();
         NewsApi newsApi = ApiFactory.getNewsApi();
-
-//
-//        call.enqueue(new Callback<StoryList>() {
-//            @Override
-//            public void onResponse(Call<StoryList> call, Response<StoryList> response) {
-//                if (response.isSuccessful()) {
-//                    StoryList articlesList = response.body();
-//                    assert articlesList != null;
-//                    storyList = artiCall<StoryList> call = newsApi.getPosts();clesList.getArticles();
-//                    initRecycler();
-//                    Log.d(TAG, "onResponse: " + storyList.size());
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<StoryList> call, Throwable t) {
-//                Log.d(TAG, "onFailure: " + t.getMessage());
-//            }
-//        });
-        Call<StoryList> call = newsApi.getPostsByDate(ApiFactory.getCurrentDate());
+        Call<StoryList> call = newsApi.getPostsByDate("software", ApiFactory.getCurrentDate(),
+                ApiFactory.getCurrentDate(), 20, ApiFactory.API_KEY);
         call.enqueue(new Callback<StoryList>() {
             @Override
             public void onResponse(Call<StoryList> call, Response<StoryList> response) {
+                Log.d(TAG, "onResponse: " + response);
                 StoryList articlesList = response.body();
+                assert articlesList != null;
                 storyList = articlesList.getArticles();
                 initRecycler();
-                    Log.d(TAG, "onResponse: " + storyList.size());
+                Log.d(TAG, "onResponse: " + storyList.size());
             }
 
             @Override
             public void onFailure(Call<StoryList> call, Throwable t) {
-
+                Toast.makeText(MainActivity.this, "ERROR = " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
