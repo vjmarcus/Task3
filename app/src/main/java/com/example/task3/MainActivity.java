@@ -2,6 +2,7 @@ package com.example.task3;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -34,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private Spinner spinner;
     private List<Story> storyList;
     private RecyclerViewClickListener recyclerViewClickListener;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +44,14 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         Log.d(TAG, "onCreate");
         setTitle("Software");
         initSpinner();
+        swipeRefreshLayout = findViewById(R.id.swipe_container);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getCallToNewsApi(spinner.getSelectedItem().toString());
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
     }
 
     private void getCallToNewsApi(String key) {
@@ -88,14 +98,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         Intent intent = new Intent(this, SecondActivity.class);
         intent.putExtra("obj", storyList.get(position));
         startActivity(intent);
-    }
-
-    private void addTestStories() {
-        storyList = new ArrayList<>();
-        for (int i = 0; i < 20; i++) {
-            storyList.add(new Story(new Source("sourceName"), "author" + i, "title" + i,
-                    "description" + i, "urlToImage" + i, "publishedAt" + i));
-        }
     }
 
     private void initSpinner() {

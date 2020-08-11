@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.task3.R;
 import com.example.task3.RecyclerViewClickListener;
@@ -23,6 +24,16 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.StoryViewHol
     public StoryAdapter(List<Story> storyList, RecyclerViewClickListener recyclerViewClickListener) {
         this.storyList = storyList;
         this.recyclerViewClickListener = recyclerViewClickListener;
+    }
+
+    public void clear() {
+        storyList.clear();
+        notifyDataSetChanged();
+    }
+
+    public void addAll(List<Story> list) {
+        storyList.addAll(list);
+        notifyDataSetChanged();
     }
 
     @NonNull

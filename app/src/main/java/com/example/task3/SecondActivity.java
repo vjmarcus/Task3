@@ -4,9 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.task3.model.Story;
+import com.squareup.picasso.Picasso;
 
 public class SecondActivity extends AppCompatActivity {
 
@@ -14,6 +17,8 @@ public class SecondActivity extends AppCompatActivity {
     private TextView sourceNameTextView;
     private TextView descriptionTextView;
     private Story story;
+    private ImageView glideImageView;
+    private ImageView picassoImageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +27,23 @@ public class SecondActivity extends AppCompatActivity {
         init();
         getIntentFromMainActivity();
         setTextToTextView();
+        initImageViews();
+        setImageViews();
 
+    }
+
+    private void setImageViews() {
+        Glide.with(this)
+                .load(story.getUrlToImage())
+                .into(glideImageView);
+
+        Picasso.get().load(story.getUrlToImage())
+                .into(picassoImageView);
+    }
+
+    private void initImageViews() {
+        glideImageView = findViewById(R.id.glideImageView);
+        picassoImageView = findViewById(R.id.picassoImageView);
     }
 
     private void setTextToTextView() {

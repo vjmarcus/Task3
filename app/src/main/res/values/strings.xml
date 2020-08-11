@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Task3</string>
+    <string name="glide">Glide</string>
+    <string name="picasso">Picasso</string>
     <string-array name="topics">
         <item>software</item>
         <item>bitcoin</item>
