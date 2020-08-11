@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,7 +25,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity{
     private static final String TAG = "MyApp";
 
     private TextView authorTextView;
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private List<Story> storyList;
     private StoryAdapter storyAdapter;
     private Retrofit retrofit;
+    private RecyclerViewClickListener recyclerViewClickListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
                 StoryList articlesList = response.body();
                 assert articlesList != null;
                 storyList = articlesList.getArticles();
+                initRecyclerViewClickListener();
                 initRecycler();
                 Log.d(TAG, "onResponse: " + storyList.size());
             }
@@ -78,8 +81,17 @@ public class MainActivity extends AppCompatActivity {
 
     private void initRecycler() {
         recyclerView = findViewById(R.id.story_recycler);
-        storyAdapter = new StoryAdapter(storyList);
+        storyAdapter = new StoryAdapter(storyList, recyclerViewClickListener);
         recyclerView.setAdapter(storyAdapter);
+    }
+
+    private void initRecyclerViewClickListener() {
+        recyclerViewClickListener = new RecyclerViewClickListener() {
+            @Override
+            public void recyclerViewListClicked(View v, int position) {
+                Toast.makeText(MainActivity.this, "CLICK " + position, Toast.LENGTH_SHORT).show();
+            }
+        };
     }
 
     private void addTestStories() {

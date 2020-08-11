@@ -4,11 +4,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.task3.R;
+import com.example.task3.RecyclerViewClickListener;
 import com.example.task3.model.Story;
 
 import java.util.List;
@@ -16,9 +18,11 @@ import java.util.List;
 public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.StoryViewHolder> {
 
     private List<Story> storyList;
+    private RecyclerViewClickListener recyclerViewClickListener;
 
-    public StoryAdapter(List<Story> storyList) {
+    public StoryAdapter(List<Story> storyList, RecyclerViewClickListener recyclerViewClickListener) {
         this.storyList = storyList;
+        this.recyclerViewClickListener = recyclerViewClickListener;
     }
 
     @NonNull
@@ -43,7 +47,7 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.StoryViewHol
         return storyList.size();
     }
 
-    public class StoryViewHolder extends RecyclerView.ViewHolder {
+    public class StoryViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private final TextView authorTextView;
         private final TextView titleTextView;
@@ -54,6 +58,12 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.StoryViewHol
             authorTextView = itemView.findViewById(R.id.authorTextView);
             titleTextView = itemView.findViewById(R.id.titleTextView);
             publishedAtTextView = itemView.findViewById(R.id.publishedAtTextView);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            recyclerViewClickListener.recyclerViewListClicked(view, this.getLayoutPosition());
         }
     }
 }
