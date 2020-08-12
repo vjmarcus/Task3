@@ -3,9 +3,11 @@ package com.example.task3.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 
-public class StoryList {
+public class StoryList implements Serializable {
     @SerializedName("articles")
     @Expose
     public List<Story> articles = null;
@@ -20,5 +22,25 @@ public class StoryList {
 
     public void setArticles(List<Story> articles) {
         this.articles = articles;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        StoryList storyList = (StoryList) o;
+        return Objects.equals(articles, storyList.articles);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(articles);
+    }
+
+    @Override
+    public String toString() {
+        return "StoryList{" +
+                "articles=" + articles +
+                '}';
     }
 }

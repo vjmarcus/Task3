@@ -7,17 +7,15 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         tools:context=".SecondActivity">
 
-        <!--Как правильно называть TextView, если у них одинаковый функционал?-->
         <TextView
-            android:id="@+id/titleSecondTextView"
+            android:id="@+id/titleTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/simple_dimen"
             android:padding="@dimen/simple_dimen"
-
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -28,10 +26,9 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/simple_dimen"
             android:padding="@dimen/simple_dimen"
-
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/titleSecondTextView" />
+            app:layout_constraintTop_toBottomOf="@+id/titleTextView" />
 
         <TextView
             android:id="@+id/descriptionSecondTextView"
@@ -58,11 +55,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/simple_dimen"
+            android:contentDescription="@string/glide"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/glideLabelTextView"
-            tools:srcCompat="@tools:sample/avatars"
-            android:contentDescription="@string/glide" />
+            tools:srcCompat="@tools:sample/avatars" />
 
         <TextView
             android:id="@+id/picassoLabelTextView"
@@ -79,11 +76,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/simple_dimen"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:contentDescription="@string/picasso"
             android:scaleType="centerCrop"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/picassoLabelTextView"
-            tools:srcCompat="@tools:sample/avatars"
-            android:contentDescription="@string/picasso" />
+            tools:srcCompat="@tools:sample/avatars" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

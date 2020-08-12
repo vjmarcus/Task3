@@ -1,5 +1,6 @@
 package com.example.task3;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -32,12 +33,47 @@ import retrofit2.internal.EverythingIsNonNull;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
+    private static final String SOFTWARE = "software";
+    private static final String ANDROID = "android";
+    private static final String SCIENCE = "science";
+    private static final String TECHNOLOGY = "technology";
+    private static final String BITCOIN = "bitcoin";
     private static final String TAG = "MyApp";
     private Spinner spinner;
     private List<Story> storyList;
     private RecyclerViewClickListener recyclerViewClickListener;
     private SwipeRefreshLayout swipeRefreshLayout;
     private ResponseListener responseListener;
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+        //DO NOTHING
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        switch (adapterView.getSelectedItem().toString()) {
+            case BITCOIN:
+                getCallToNewsApi(BITCOIN);
+                setTitle(getString(R.string.bitcoin));
+                break;
+            case ANDROID:
+                getCallToNewsApi(ANDROID);
+                setTitle(getString(R.string.android));
+                break;
+            case SCIENCE:
+                getCallToNewsApi(SCIENCE);
+                setTitle(getString(R.string.science));
+                break;
+            case TECHNOLOGY:
+                getCallToNewsApi(TECHNOLOGY);
+                setTitle(getString(R.string.technology));
+                break;
+            default:
+                getCallToNewsApi(SOFTWARE);
+                setTitle(getString(R.string.software));
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +94,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
-
     }
 
     private void initResponseListener() {
@@ -80,17 +115,17 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         Call<StoryList> call = newsApi.getPostsByDate(key, ApiFactory.getCurrentDate(),
                 ApiFactory.getCurrentDate(), 20, "en", ApiFactory.API_KEY);
         call.enqueue(new Callback<StoryList>() {
-            @EverythingIsNonNull
             @Override
-            public void onResponse(Call<StoryList> call, Response<StoryList> response) {
+            public void onResponse(@NonNull  Call<StoryList> call, @NonNull Response<StoryList> response) {
                 Log.d(TAG, "onResponse: " + response);
                 StoryList articlesList = response.body();
-                assert articlesList != null;
-                storyList = articlesList.getArticles();
-                initRecyclerViewClickListener();
-                initRecycler();
-                Log.d(TAG, "onResponse: " + storyList.size());
-                responseListener.responseReceived(true);
+                if (articlesList != null) {
+                    storyList = articlesList.getArticles();
+                    initRecyclerViewClickListener();
+                    initRecycler();
+                    Log.d(TAG, "onResponse: " + storyList.size());
+                    responseListener.responseReceived(true);
+                }
             }
             @EverythingIsNonNull
             @Override
@@ -129,35 +164,5 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 android.R.layout.simple_list_item_1);
         spinner.setAdapter(arrayAdapter);
         spinner.setOnItemSelectedListener(this);
-    }
-
-    @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        switch (adapterView.getSelectedItem().toString()) {
-            case "bitcoin":
-                getCallToNewsApi("bitcoin");
-                setTitle("Bitcoin");
-                break;
-            case "android":
-                getCallToNewsApi("android");
-                setTitle("Android");
-                break;
-            case "science":
-                getCallToNewsApi("science");
-                setTitle("Science");
-                break;
-            case "technology":
-                getCallToNewsApi("technology");
-                setTitle("Technology");
-                break;
-            default:
-                getCallToNewsApi("software");
-                setTitle("Software");
-        }
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
-        //DO NOTHING
     }
 }

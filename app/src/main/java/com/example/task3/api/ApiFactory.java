@@ -14,9 +14,15 @@ public class ApiFactory {
     public static ApiFactory apiFactory;
     private static Retrofit retrofit;
 
-    public static ApiFactory getInstance() {
-        if (apiFactory == null)
-            apiFactory = new ApiFactory();
+    // Double check
+    public static synchronized ApiFactory getInstance() {
+        if (apiFactory == null) {
+            synchronized (ApiFactory.class) {
+                if (apiFactory == null){
+                    apiFactory = new ApiFactory();
+                }
+            }
+        }
         return apiFactory;
     }
 
