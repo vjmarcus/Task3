@@ -4,6 +4,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public class Story implements Serializable {
     @SerializedName("source")
@@ -80,5 +81,35 @@ public class Story implements Serializable {
 
     public void setPublishedAt(String publishedAt) {
         this.publishedAt = publishedAt;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Story story = (Story) o;
+        return Objects.equals(source, story.source) &&
+                Objects.equals(author, story.author) &&
+                Objects.equals(title, story.title) &&
+                Objects.equals(description, story.description) &&
+                Objects.equals(urlToImage, story.urlToImage) &&
+                Objects.equals(publishedAt, story.publishedAt);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(source, author, title, description, urlToImage, publishedAt);
+    }
+
+    @Override
+    public String toString() {
+        return "Story{" +
+                "source=" + source +
+                ", author='" + author + '\'' +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", urlToImage='" + urlToImage + '\'' +
+                ", publishedAt='" + publishedAt + '\'' +
+                '}';
     }
 }
