@@ -52,7 +52,7 @@ public class SecondActivity extends AppCompatActivity {
     }
 
     private void init() {
-        titleSecondTextView = findViewById(R.id.titleSecondTextView);
+        titleSecondTextView = findViewById(R.id.titleTextView);
         sourceNameTextView = findViewById(R.id.sourceNameSecondTextView);
         descriptionTextView = findViewById(R.id.descriptionSecondTextView);
     }

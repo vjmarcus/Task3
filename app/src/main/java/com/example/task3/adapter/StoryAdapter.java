@@ -7,6 +7,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -40,6 +41,8 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.StoryViewHol
         holder.titleTextView.setText(story.getTitle());
         holder.authorTextView.setText(story.getAuthor());
         holder.publishedAtTextView.setText(story.getPublishedAt());
+        ViewCompat.setTransitionName(holder.titleTextView, "transition");
+        holder.titleTextView.setTransitionName("transition");
     }
 
     @Override

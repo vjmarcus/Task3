@@ -1,6 +1,7 @@
 package com.example.task3;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityOptionsCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -8,6 +9,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
@@ -159,5 +162,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
         //DO NOTHING
+    }
+
+    private void startAnimation(View view) {
+        Animation scaleUp = AnimationUtils.loadAnimation(this, R.anim.scale_up);
+        view.startAnimation(scaleUp);
+
     }
 }
