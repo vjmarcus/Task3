@@ -2,6 +2,7 @@ package com.example.task3;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityOptionsCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -145,17 +146,20 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private void initRecyclerViewClickListener() {
         recyclerViewClickListener = new RecyclerViewClickListener() {
             @Override
-            public void recyclerViewListClicked(View v, int position) {
-                Toast.makeText(MainActivity.this, "CLICK " + position, Toast.LENGTH_SHORT).show();
-                startIntentToSecondActivity(position);
+            public void recyclerViewListClicked(View sharedView, int position) {
+                Toast.makeText(MainActivity.this, "CLICK " + position + ", sharedView = " +
+                        sharedView.getTransitionName(), Toast.LENGTH_SHORT).show();
+                startIntentToSecondActivity(position, sharedView);
             }
         };
     }
 
-    private void startIntentToSecondActivity(int position) {
+    private void startIntentToSecondActivity(int position, View sharedView) {
         Intent intent = new Intent(this, SecondActivity.class);
         intent.putExtra("obj", storyList.get(position));
-        startActivity(intent);
+        ActivityOptionsCompat compat = ActivityOptionsCompat
+                .makeSceneTransitionAnimation(MainActivity.this, sharedView, "transition");
+        startActivity(intent, compat.toBundle());
     }
 
     private void initSpinner() {
