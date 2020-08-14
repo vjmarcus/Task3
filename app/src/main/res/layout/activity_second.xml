@@ -12,14 +12,14 @@
 
         <TextView
             android:id="@+id/titleTextView"
-            android:transitionName="transition"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/simple_dimen"
             android:padding="@dimen/simple_dimen"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/picassoImageView" />
 
         <TextView
             android:id="@+id/sourceNameSecondTextView"
@@ -42,47 +42,17 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/sourceNameSecondTextView" />
 
-        <TextView
-            android:id="@+id/glideLabelTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_top"
-            android:text="@string/glide"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/descriptionSecondTextView" />
-
-        <ImageView
-            android:id="@+id/glideImageView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/simple_dimen"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/glideLabelTextView"
-            tools:srcCompat="@tools:sample/avatars"
-            android:contentDescription="@string/glide" />
-
-        <TextView
-            android:id="@+id/picassoLabelTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_top"
-            android:text="@string/picasso"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/glideImageView" />
-
         <ImageView
             android:id="@+id/picassoImageView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/simple_dimen"
+            android:layout_width="400dp"
+            android:layout_height="400dp"
+            android:layout_marginTop="8dp"
+            android:contentDescription="@string/picasso"
+            android:transitionName="transition"
             app:layout_constraintEnd_toEndOf="parent"
-            android:scaleType="centerCrop"
+            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/picassoLabelTextView"
-            tools:srcCompat="@tools:sample/avatars"
-            android:contentDescription="@string/picasso" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@tools:sample/avatars" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

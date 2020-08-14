@@ -16,7 +16,6 @@ public class SecondActivity extends AppCompatActivity {
     private TextView titleSecondTextView;
     private TextView sourceNameTextView;
     private TextView descriptionTextView;
-    private ImageView glideImageView;
     private ImageView picassoImageView;
     private Story story;
 
@@ -32,16 +31,11 @@ public class SecondActivity extends AppCompatActivity {
     }
 
     private void loadImageToImageViews() {
-        Glide.with(this)
-                .load(story.getUrlToImage())
-                .into(glideImageView);
-
         Picasso.get().load(story.getUrlToImage())
                 .into(picassoImageView);
     }
 
     private void initImageViews() {
-        glideImageView = findViewById(R.id.glideImageView);
         picassoImageView = findViewById(R.id.picassoImageView);
     }
 
