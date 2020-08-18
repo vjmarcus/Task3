@@ -13,23 +13,21 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.task3.adapter.StoryAdapter;
 import com.example.task3.api.ApiFactory;
 import com.example.task3.api.NewsApi;
-import com.example.task3.model.Source;
-import com.example.task3.model.Story;
-import com.example.task3.model.StoryList;
+import com.example.task3.data.Story;
+import com.example.task3.data.StoryList;
+import com.example.task3.listeners.RecyclerViewClickListener;
+import com.example.task3.listeners.ResponseListener;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
 import retrofit2.internal.EverythingIsNonNull;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {

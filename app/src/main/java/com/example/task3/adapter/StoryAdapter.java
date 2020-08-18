@@ -5,17 +5,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.bumptech.glide.Glide;
 import com.example.task3.R;
-import com.example.task3.RecyclerViewClickListener;
-import com.example.task3.model.Story;
+import com.example.task3.listeners.RecyclerViewClickListener;
+import com.example.task3.data.Story;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;

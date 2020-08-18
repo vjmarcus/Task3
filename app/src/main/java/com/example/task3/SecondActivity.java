@@ -7,8 +7,7 @@ import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.example.task3.model.Story;
+import com.example.task3.data.Story;
 import com.squareup.picasso.Picasso;
 
 public class SecondActivity extends AppCompatActivity {

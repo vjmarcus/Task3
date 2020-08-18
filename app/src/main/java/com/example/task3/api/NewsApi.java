@@ -1,6 +1,6 @@
 package com.example.task3.api;
 
-import com.example.task3.model.StoryList;
+import com.example.task3.data.StoryList;
 import retrofit2.Call;
 import retrofit2.http.GET;
 
